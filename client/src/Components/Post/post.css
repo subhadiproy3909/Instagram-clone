@@ -1,0 +1,53 @@
+.posts {
+    background-color: black; 
+    display: flex;
+    flex-direction:column;
+    flex-wrap: wrap;
+    margin-left: 3rem;
+}
+
+.post-header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+
+.logoforpost {
+    margin: 10px;
+
+}
+
+.modalclassNameforAPost {
+    width: 70%;
+    height: 94vh;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    /* border-radius: 10px; */
+    /* padding: 20px; */
+    border: none;
+    background-color: #1f1e1e;
+    margin-top: 15px;
+    border: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.modalclassNameforAPost:focus{
+    outline: none;
+}
+
+
+.scrollable-div {
+    height: 70vh;
+    overflow: auto
+}
+
+.scrollable-div::-webkit-scrollbar {
+    width: 0.5em;
+    background-color: transparent;
+}
+
+.scrollable-div::-webkit-scrollbar-thumb {
+    background-color: transparent;
+}

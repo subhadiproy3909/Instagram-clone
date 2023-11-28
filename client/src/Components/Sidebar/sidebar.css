@@ -1,0 +1,105 @@
+.mainsidebar {
+    background-color: black;
+    height: 100vh;
+    overflow: hidden;
+    position: fixed;
+    width: 20%;
+    border-right: 0.5px solid rgb(97, 97, 97);
+    display: flex;
+
+}
+
+.listtext {
+    color: #fafafa;
+    list-style: none;
+}
+
+.logos {
+    margin-left: 0px;
+}
+
+ul {
+    margin-left: 20px;
+}
+
+.profileicon {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: contain;
+}
+
+.moreicon {
+    /* margin-top: 240px; */
+    margin-top: 2.4rem;
+    cursor: pointer;
+}
+
+.textinputforpost {
+    width: 100%;
+    height: 140px;
+    background-color: black;
+    color: white;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 18px;
+    border: none;
+}
+
+.textinputforpost::placeholder {
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border: none;
+    font-size: 14px;
+}
+
+.createpost {
+    padding-left: 40px;
+    padding-right: 40px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    background-color: #0095F6;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.showsearchinput {
+    background-color: rgb(38, 38, 38);
+    border: none;
+    width: 80%;
+    height: 15px;
+    margin-left: 10px;
+    outline: none;
+    color: white;
+}
+
+.searchBox {
+    position: fixed;
+    left: 65px;
+    width: 400px;
+    height: 100vh;
+    background-color: black;
+    overflow: hidden;
+    z-index: 10;
+    /* background-color: red; */
+    border-left: 1px solid rgb(71, 70, 70);
+    border-right: 1px solid rgb(44, 44, 44);
+    border-radius: 0 10px 10px 0;
+}
+
+.search-result-list{
+    height: 72vh;
+    overflow: auto; 
+    margin: 0rem 0; 
+    margin-left: 10; 
+    margin-top: 10; 
+}
+
+.search-result-list::-webkit-scrollbar{
+    display: none;
+}
+
+.showsearchinput::placeholder {
+    color: #A8A8A8;
+}

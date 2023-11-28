@@ -1,0 +1,11 @@
+.MainRigntBar{
+    height: auto;
+    overflow: auto;
+    padding: 25px;
+    /* background-color: red; */
+}
+
+.submainrightbar{
+    display: flex;
+    justify-content: space-between;
+}

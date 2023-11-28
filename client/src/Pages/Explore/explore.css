@@ -1,0 +1,48 @@
+.Explorerightbar{
+    margin: 10px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); */
+    gap: 5px;
+}
+
+.container{
+    position: relative;
+    height: 50dvh;
+    margin-left: 10px;
+    cursor: pointer;
+}
+
+.imagefor{
+    width: 100%;
+}
+
+.imageforimage{
+    width: 100%;
+    height: 50dvh;
+    object-fit: cover;
+}
+
+.text{
+    display: flex;
+    font-size: 1rem;
+    position: absolute;
+    top: 0px;
+    font-weight: 600;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    width: 100%;
+    align-items: center;
+    height: 50dvh;
+    justify-content: center;
+    visibility: hidden;
+}
+.logoforexplorepost{
+    width: 20px;
+    height: 20px;
+}
+
+
+.container:hover .text{
+    visibility: visible;
+}

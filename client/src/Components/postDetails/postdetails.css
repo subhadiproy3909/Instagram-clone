@@ -1,0 +1,81 @@
+.explore-modal{
+    display: flex;
+}
+
+.explore-post-rightside{
+    display: flex;
+    height: 100%;
+}
+
+.explore-rightside-header{
+    margin: 1.5rem .6rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+hr{
+    opacity: .1;
+}
+
+.explore-account{
+    display: flex;
+    line-height: 2rem;
+    color: white;
+    cursor: pointer;
+}
+
+.explore-account > div{
+    margin-left: 10px;
+}
+
+.comment-section{
+    display: flex;
+    flex-direction: column;
+    margin-left: 10px;
+    color: #fff;
+    height: 51dvh;
+    overflow: auto;
+}
+
+.comment-section::-webkit-scrollbar{
+    visibility:hidden;
+}
+
+.comments p{
+    margin: 0 0;
+}
+
+.explore-rightside-footer > div{
+    margin: 0px 10px;
+}
+
+.explore-rightside-footer p{
+    margin: 0 0;
+}
+.explore-rightside-footer img{
+    margin: 0;
+}
+
+.messge-section{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.messge-section input{
+    color: #fff;
+    background-color: transparent;
+    border: none;
+}
+
+.messge-section img{
+    margin: 0 5px 0 0;
+    opacity: 7;
+    cursor: pointer;
+}
+
+.messge-section input:focus{
+    outline: none;
+}
+
