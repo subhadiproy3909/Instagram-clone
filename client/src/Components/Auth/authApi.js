@@ -23,7 +23,9 @@ export function loginUser(userData) {
         });
 
         const data = await response.json();
-        resolve(data);
+        if(!data.message){
+            resolve(data);
+        }
     });
 }
 
@@ -60,6 +62,22 @@ export function logOut(userId) {
             }
         }
         catch(error){
+            reject(error);
+        }
+    })
+}
+
+
+export function fetchUserData(){
+    return new Promise(async (resolve, reject) => {
+        const response = await fetch(`api/user/fetch/user`);
+
+        if(response.ok){
+            const data = response.json();
+            resolve(data);
+        }
+        else{
+            const error = await response.text();
             reject(error);
         }
     })

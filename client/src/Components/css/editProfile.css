@@ -1,0 +1,41 @@
+.edit-profile{
+    margin: 3rem 10rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.profile_section{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+}
+
+.profile_section div{
+    display: flex;
+}
+
+.edit-photo{
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-photo p{
+    margin: 0 0;
+}
+
+.profile_section-leftside{
+    width: 55%;
+    display: flex;
+    flex-direction: column;
+}
+
+.profile_section-rightside{
+    /* background-color: red; */
+    display: flex;
+    justify-content: end;
+    text-align: end;
+    width: 7rem;
+    margin-right: 2rem;
+}

@@ -1,15 +1,10 @@
+import axios from "axios";
+
 export function createPost(postInfo) {
     return new Promise(async (resolve) => {
-        const response = await fetch(`api/post/create`, {
-            method: "POST",
-            body: JSON.stringify(postInfo),
-            headers: {
-                "content-type": "application/json",
-            }
-        });
 
-        const data = await response.json();
-        resolve(data);
+        const response = await axios.post(`api/post/create`, postInfo);
+        resolve(response);
     });
 }
 
@@ -25,41 +20,49 @@ export function fetchPosts(username){
 
 export function fetchPostDetails(postId){
     return new Promise (async (resolve) => {
-        const response = await fetch(`api/post/fetch/selected/post?${postId}`);
+        // const response = await fetch(`api/post/fetch/selected/post?${postId}`);
+        // const data = await response.json();
 
-        const data = await response.json();
-        resolve(data);
+        // console.log(postId);
+        const config = {
+            headers: {
+                "Content-type": "application/json",
+            }
+        }
+        const response = await axios.get(`api/post/fetch/selected/post/${postId}`, config);
+        resolve(response.data);
     });
 }
 
 export function addComment(comment){
     return new Promise (async (resolve) => {
-        const response = await fetch(`api/comment/add`, {
-            method: "POST",
-            body: JSON.stringify(comment),
+        // console.log(comment);
+
+        const config = {
             headers: {
-                "content-type": "application/json",
-            },
-        })
+                "Content-type": "application/json",
+            }
+        }
+        const response = await axios.patch(`api/post/comment/add`, comment, config);
+
+        resolve(response.data);
+    });
+}
+
+export function fetchComment(postId){
+    return new Promise (async (resolve) => {
+        const response = await fetch(`api/post/comment/fetch/${postId}`);
 
         const data = await response.json();
-
         resolve(data);
     });
 }
 
 export function handleLike(postId){
     return new Promise (async (resolve) => {
-        const response = await fetch(`api/like`, {
-            method: "PATCH",
-            body:JSON.stringify(postId),
-            headers: {
-                "content-type": "application/json",
-            },
-        })
 
-        const data = await response.json();
-
+        const {data} = await axios.patch(`api/post/like`, postId);
+        console.log("like data", data);
         resolve(data);
     });
 }

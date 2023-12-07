@@ -8,7 +8,7 @@ const { sendMail } = require('../services/sendMail');
 
 const userSignup = async (req, res) => {
     try {
-        console.log(req.body);
+        // console.log(req.body);
         const { email, fullname, username, password } = req.body;
 
         const isExists = await User.findOne({ email: email });
@@ -24,11 +24,12 @@ const userSignup = async (req, res) => {
         if (user) {
             const jwtToken = generateToken(user._id);
             await Profile.create({user: user._id});
-            console.log(`jwt token ${jwtToken}`);
+            // console.log(`jwt token ${jwtToken}`);
             res.cookie("fwi_&wei&bn", jwtToken, { expires: new Date(Date.now() + (2 * 60 * 60 * 1000)), httpOnly: true, });
 
             res.json({
-                email: user.email,
+                id: user._id,
+                username: user.username,
                 token: jwtToken,
             });
             // const userEmail = user.email;
@@ -73,7 +74,8 @@ const userLogin = async (req, res) => {
             const jwtToken = generateToken(user._id);
             res.cookie("fwi_&wei&bn", jwtToken, { expires: new Date(Date.now() + (2 * 60 * 60 *1000)), httpOnly: true});
             return res.json({
-                email: user.email,
+                id: user._id,
+                username: user.username,
                 token: jwtToken,
             })
         }
@@ -90,7 +92,9 @@ const userAuth = async (req, res) => {
         if(req.cookies['fwi_&wei&bn']){
             const user = await User.findOne(req.user);
             res.json({
-                email: user.email,
+                id: user._id,
+                username: user.username,
+                image: user.image,
             })
         }
         else{

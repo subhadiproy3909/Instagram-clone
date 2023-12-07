@@ -5,14 +5,28 @@
     background-color: red;
 }
 
+.routerdom-link{
+    text-decoration: none;
+    color: white;
+}
+
 .leftside{
     background-color: black;
     width: 20%;
 }
 
 .rightside{
+    min-height: 100dvh;
     width: 80%;
     background-color: black;
+    overflow: hidden;
+}
+
+.loading{
+    height: 100dvh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 @media (prefers-reduced-motion: no-preference) {

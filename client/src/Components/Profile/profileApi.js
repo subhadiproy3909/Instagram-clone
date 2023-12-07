@@ -1,10 +1,13 @@
-export function fetchProfile() {
+import axios from "axios";
+
+export function fetchProfile(userId) {
     return new Promise(async (resolve, reject) => {
         try {
-            const response = await fetch("api/profile/fetch");
+            const response = await fetch(`api/profile/${userId}`);
 
             if (response.ok) {
                 const data = await response.json();
+                console.log(data);
                 resolve(data);
             }
             else {
@@ -54,17 +57,20 @@ export function updateFollowing(id) {
     })
 }
 
-export function updateSavedPost(posId) {
+export function updateSavedPost(postId) {
     return new Promise (async (resolve) => {
-        const response = await fetch("api/profile/save/post", {
-            method: "PATCH",
-            body: JSON.stringify(posId),
-            headers: {
-                "content-type": "application/json",
-            },
-        });
+        // const response = await fetch("api/profile/save/post", {
+        //     method: "PATCH",
+        //     body: JSON.stringify(posId),
+        //     headers: {
+        //         "content-type": "application/json",
+        //     },
+        // });
 
-        const data = await response.json();
+        // const data = await response.json();
+        // resolve(data);
+
+        const {data} = await axios.patch(`api/profile/save/post`, postId);
         resolve(data);
     })
 }

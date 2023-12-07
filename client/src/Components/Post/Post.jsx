@@ -8,7 +8,7 @@ import Saveicon from "../../Icons/Save.png"
 import unlike from "../../Icons/Unlike.png"
 import Emoji from "../../Icons/Emoji.png"
 import Modal from "react-modal";
-import PostDetails from '../postDetails/PostDetails'
+import PostDetails from './PostDetails'
 export default function Post(item) {
 
     const [modalIsOpen, setmodalIsOpen] = useState(false);

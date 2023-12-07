@@ -21,6 +21,7 @@ app.use(cors());
 
 
 // routing middleware.
+app.use('/common', require('./routes/commonRouter'));
 app.use('/user', require('./routes/userRouter'));
 app.use('/post', require('./routes/postRouter'));
 app.use('/profile', require('./routes/profileRouter'));

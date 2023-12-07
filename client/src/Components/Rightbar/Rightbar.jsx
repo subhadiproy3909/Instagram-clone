@@ -1,17 +1,16 @@
 import React from 'react'
 import "./rightbar.css"
 import Post from '../Post/Post'
-import { PostExplore } from '../data'
 export default function Rightbar() {
   return (
     <div className='MainRigntBar'>
       <div className='submainrightbar'>
 
-        <div style={{}}>
+        {/* <div style={{}}>
           {PostExplore.map((item) => (
             <Post item={item} />
           ))}
-        </div>
+        </div> */}
 
         <div>
           <div style={{ marginRight: "50px" }}>

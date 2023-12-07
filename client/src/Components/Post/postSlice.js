@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { createPost, fetchPosts, fetchPostDetails, addComment, handleLike } from "./postApi";
+import { createPost, fetchPosts, fetchPostDetails, addComment, fetchComment, handleLike } from "./postApi";
 
 const initialState = {
     posts: [],
-    postDetails: null,
+    postDetails: {},
     status: "idle",
 }
 
@@ -12,8 +12,8 @@ const initialState = {
 export const createPostAsync = createAsyncThunk(
     "post/create",
     async (postInfo) => {
+        // console.log(postInfo);
         const resopnse = await createPost(postInfo);
-
         return resopnse;
     }
 )
@@ -31,6 +31,8 @@ export const fetchPostDetailsAsync = createAsyncThunk(
     "post/fetch/details",
     async (postId) => {
         const response = await fetchPostDetails(postId);
+
+        // console.log("fetchPostdetails: ",response);
         return response;
     }
 );
@@ -39,9 +41,18 @@ export const addCommentAsync = createAsyncThunk(
     "post/comment/add",
     async (comment) => {
         const response = await addComment(comment);
+        console.log(response)
         return response;
     }
 );
+
+export const fetchCommentAsync = createAsyncThunk(
+    "post/comment/fetch",
+    async (postId) => {
+        const response = await fetchComment(postId);
+        return response;
+    }
+)
 
 export const handleLikeAsync = createAsyncThunk(
     "post/like",
@@ -91,6 +102,15 @@ export const postSlice = createSlice({
                 state.postDetails.comment = action.payload;
             })
 
+            .addCase(fetchCommentAsync.pending, (state) => {
+                state.status = "loading";
+            })
+            .addCase(fetchCommentAsync.fulfilled, (state, action) => {
+                state.status = "idle";
+                // state.postDetails.comment = action.payload;
+                state.postDetails.comment.push(action.payload);
+            })
+
             .addCase(handleLikeAsync.pending, (state) => {
                 state.status = "loading";
             })
@@ -104,5 +124,6 @@ export const postSlice = createSlice({
 export const selectPosts = (state) => state.post.posts;
 export const selectPostDetails = (state) => state.post.postDetails;
 export const selectPostStatus = (state) => state.post.status;
+// console.log(selectPostDetails);
 
 export default postSlice.reducer;

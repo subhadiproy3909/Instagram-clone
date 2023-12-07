@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const userSchema = new mongoose.Schema({
     image: {
         type: String,
-        default: "https://instagram.fdad1-2.fna.fbcdn.net/v/t51.2885-19/44884218_345707102882519_2446069589734326272_n.jpg?_nc_ht=instagram.fdad1-2.fna.fbcdn.net&_nc_cat=1&_nc_ohc=6dmGEQDcv_4AX-Pd7F2&edm=AA0lj5EBAAAA&ccb=7-5&oh=00_AfDGa4Rr5i1lgDtY0JhluG5DkinZXQAjaMyqoN4kP3rH1g&oe=65557B0F&_nc_sid=0a490e"
+        default: "https://i.pinimg.com/originals/66/ff/cb/66ffcb56482c64bdf6b6010687938835.jpg"
     },
     email: {
         type: String,

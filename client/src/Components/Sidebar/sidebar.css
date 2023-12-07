@@ -29,6 +29,20 @@ ul {
     object-fit: contain;
 }
 
+.sidebar-icons{
+    display: flex;
+    align-items: center;
+    margin-top: 28px;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+.sidebar-brand-icon{
+    display: flex;
+    margin-top: 45px;
+    margin-left: 20px;
+}
+
 .moreicon {
     /* margin-top: 240px; */
     margin-top: 2.4rem;
@@ -94,6 +108,19 @@ ul {
     margin: 0rem 0; 
     margin-left: 10; 
     margin-top: 10; 
+}
+
+.searched_user-list:hover{
+    background-color: rgb(53, 53, 53);
+}
+
+.searched_user-list{
+    display: flex;
+    /* align-items: center; */
+    padding: 5px 5px;
+    padding-left: 14px;
+    margin-top: 0px;
+    cursor: pointer;
 }
 
 .search-result-list::-webkit-scrollbar{

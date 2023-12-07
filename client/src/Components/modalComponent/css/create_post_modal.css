@@ -1,0 +1,147 @@
+.modal-container{
+    background-color: rgb(54, 53, 53);
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    width: 375px;
+    height: 420px;
+    display: flex;
+    flex-direction: column;
+}
+
+.modal_container-heading, .modal_container-heading-preview{
+    display: flex;
+    justify-content: center;
+    margin: 0 0;
+    padding: .8rem 0;
+    border-bottom: 1px solid rgb(88, 87, 87);
+    font-size: 16px;
+}
+
+.modal_container-heading-preview{
+    justify-content: space-between;
+    align-items: center;
+    padding: .8rem 1rem;
+    z-index: 10;
+}
+
+.modal_container-heading-preview p{
+    margin: 0 0;
+}
+.modal_container-heading-preview p:first-child{
+    cursor: pointer;
+}
+.modal_container-heading-preview p:last-child{
+    cursor: pointer;
+    color: rgb(23, 113, 210);
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.modal_container-body{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    overflow-y: hidden;
+}
+
+.modal_container-body::-webkit-scrollbar{
+    display: none;
+}
+
+.modal-container_body-file{
+    height: 100%;
+    height: 400px;
+    width: 500px;
+    background-color: red;
+    border-radius: 10px;
+    padding: 0;
+    margin: 0;
+}
+
+.modal-container_body-share_file{
+
+}
+
+.modal-container_body-file img{
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+}
+
+.modal_container-body p{
+    font-size: 20px;
+}
+
+.modal_container-body button{
+    padding: .7rem 1rem;
+    border-radius: 10px;
+    background-color: rgb(27, 100, 197);
+    border: none;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+/* this styling fs for share post modal */
+
+.modal_container-body-share{
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: auto;
+    overflow-y: hidden;
+}
+
+.modal-container_body-share_file{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-container_body-share_file img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.modal-container_body-share_desc{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    margin: 16px 13px;
+}
+
+.modal-container_body-share_desc .profile_desc{
+    display: flex;
+    padding: 16px 0;
+}
+.modal-container_body-share_desc .profile_desc div:last-child{
+    margin-left: 5px;
+}
+
+.modal-container_body-share_desc .textarea{
+    color: white;
+    resize: none;
+    background-color: transparent;
+    border: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 16px;
+}
+.modal-container_body-share_desc .textarea:focus{
+    outline: none;
+}
+
+.modal-container_body-share_footer_list{
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+}

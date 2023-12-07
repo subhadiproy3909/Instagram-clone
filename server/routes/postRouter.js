@@ -1,19 +1,34 @@
 const router = require('express').Router();
+const multer = require('multer');
 
 
 
 const Post = require('../database/mongoDB/Models/postModel');
 const Profile = require('../database/mongoDB/Models/profileModel');
 const auth = require("../middlewares/authMiddleware");
+const uploadOnCloudinary = require("./services/fileUpload");
 
 // content.
 
-router.post("/create", auth, async (req, res) => {
-    try {
-        const owner = req.user;
-        let { content } = req.body;
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: (req, res, cb) => {
+            return cb(null, "./uploads/");
+        },
+        filename: (req, file, cb) => {
+            return cb(null, `${Date.now()}_${file.originalname}`);
+        }
+    })
+})
 
-        const post = await Post.create({owner, content});
+router.post("/create", auth, upload.single("file"),async (req, res) => {
+    try {
+
+        const owner = req.user;
+        const caption = req.body.caption;
+        const response = await uploadOnCloudinary(req.file.path);
+
+        const post = await Post.create({owner: owner, content: response.url, comment: {user: owner, message: caption}});
 
         if (post) {
             return res.json(post);
@@ -45,9 +60,9 @@ router.delete("/remove:id", auth, async (req, res) => {
     }
 });
 
-router.get("/fetch/:username", auth, async (req, res) => {
+router.get("/fetch/:username", async (req, res) => {
     try {
-        const post = await Post.find()
+        const post = await Post.find({owner: req.params.username})
             .populate("owner", "_id image username")
             .populate("comment.user", "_id image username");
 
@@ -62,11 +77,11 @@ router.get("/fetch/:username", auth, async (req, res) => {
         throw new Error(`fetch comment error: ${error}`);
     }
 })
-router.get("/fetch/selected/post", auth, async (req, res) => {
+router.get("/fetch/selected/post/:id", auth, async (req, res) => {
     try {
-        const postId = req.query.id;
+        const postId = req.params.id;
 
-        const post = await Post.findById(postId)
+        const post = await Post.findOne({ _id: postId })
             .populate("owner", "_id image username")
             .populate("comment.user", "_id image username");
 
@@ -82,17 +97,24 @@ router.get("/fetch/selected/post", auth, async (req, res) => {
     }
 })
 
-router.post("/comment/add", auth, async (req, res) => {
+router.patch("/comment/add", auth, async (req, res) => {
     try {
         const { postId, message } = req.body;
+        console.log(`postId: ${postId}, message: ${message}`);
 
-        const post = await Post.findById(postId);
-
-        post.comment.push({ user: req.user, message: message });
-
-        await post.save();
+        let post = await Post.updateOne(
+            {
+                _id: postId,
+            }
+            ,
+            {
+                $push: { comment: { user: req.user, message: message } }
+            }
+        );
         if (post) {
-            return res.json(post);
+            const fetchPost = await Post.findById(postId)
+                            .populate("owner", "_id image username").populate("comment.user", "_id image username");
+            return res.json(fetchPost.comment);
         }
         else {
             return res.sendStatus(500);
@@ -102,20 +124,47 @@ router.post("/comment/add", auth, async (req, res) => {
     }
 });
 
+router.get("/comment/fetch/:id", auth, async (req, res) => {
+    try{
+        const postId = req.params.id;
+        console.log(postId);
+
+        const post = await Post.findById(postId).select("comment").populate("comment.user", "_id image username fullname");
+
+        if(post){
+            return res.json(post);
+        }
+        else{
+            return res.sendStatus(500);
+        }
+    }
+    catch(error){
+        throw new Error(`fetch comment error: ${error}`);
+    }
+})
+
 
 // todo : change like feature.
-router.patch("/like", async (req, res) => {
+router.patch("/like", auth, async (req, res) => {
     try {
-        const postId = req.query.id;
+        const postId = req.body.id;
 
-        const likes = await Post.findById(postId).select("like");
+        const post = await Post.findOne({_id: postId});
+        console.log(post.like.includes(req.user._id));
 
-        ++likes.like;
+        if(!post.like.includes(req.user._id)){
+            await post.updateOne({ $push: { like: req.user._id } });
+        }
+        else{
+            await post.updateOne( { $pull: { like: req.user._id } } );
+        }
 
-        await likes.save();
-
-        if (likes) {
-            res.json(likes);
+        if (post) {
+            const data = await Post.findById(postId).populate("like", "_id image username fullname");;
+            return res.json(data);
+        }
+        else{
+            return res.sendStatus(500);
         }
     }
     catch (error) {

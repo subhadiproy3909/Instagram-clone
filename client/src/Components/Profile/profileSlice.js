@@ -9,8 +9,8 @@ const initialState = {
 
 export const fetchProfileAsync = createAsyncThunk(
     "profile/fetch",
-    async () => {
-        const response = await fetchProfile();
+    async (userId) => {
+        const response = await fetchProfile(userId);
         return response;
     }
 );
@@ -50,6 +50,7 @@ export const profileSlice = createSlice({
                 state.status = "loading";
             })
             .addCase(fetchProfileAsync.fulfilled, (state, action) => {
+                state.profileDetails = null;
                 state.status = "idle";
                 state.profileDetails = action.payload;
             })

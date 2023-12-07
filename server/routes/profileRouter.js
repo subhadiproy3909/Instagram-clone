@@ -5,7 +5,7 @@ const {addRemoveFollowers, addRemoveFollowing, savePostInProfile, fetchProfile} 
 router.patch('/follower', auth, addRemoveFollowers)
     .patch('/following', auth, addRemoveFollowing)
     .patch('/save/post', auth, savePostInProfile)
-    .get('/fetch', auth, fetchProfile);
+    .get('/:userId', auth, fetchProfile);
 
 
 
