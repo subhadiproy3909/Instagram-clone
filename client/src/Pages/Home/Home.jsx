@@ -1,7 +1,8 @@
 import React from 'react'
 import "./home.css"
-import Sidebar from '../../Components/Sidebar/Sidebar'
-import Rightbar from '../../Components/Rightbar/Rightbar'
+import Sidebar from '../../Components/Sidebar';
+// import Rightbar from '../../Components/Rightbar/Rightbar'
+import Rightbar from '../../Components/Rightbar';
 export default function Home() {
     return (
         <>

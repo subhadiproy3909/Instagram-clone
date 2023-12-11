@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navigate } from "react-router-dom";
 import {useSelector} from "react-redux";
-import { selectLoggedInUser } from "../authSlice";
+import { selectLoggedInUser } from "./Auth/authSlice";
 
 
 

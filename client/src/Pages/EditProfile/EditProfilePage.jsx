@@ -1,5 +1,5 @@
 import EditProfile from "../../Components/EditProfile";
-import Sidebar from "../../Components/Sidebar/Sidebar";
+import Sidebar from "../../Components/Sidebar";
 
 
 

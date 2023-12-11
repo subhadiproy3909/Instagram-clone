@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
-import "./login.css"
-import saveone from "../../../Images/saveone.png";
-import Facebookicon from "../../../Icons/pngegg.png"
-import Instagramlogo from "../../../Icons/Instagram-Logo-2010-2013.png"
+import "./css/login.css"
+import saveone from "../Images/saveone.png";
+import Facebookicon from "../Icons/pngegg.png"
+import Instagramlogo from "../Icons/Instagram-Logo-2010-2013.png"
 import { Link, Navigate } from 'react-router-dom';
 
-import { loginUserAsync, selectLoggedInUser } from '../authSlice';
+import { loginUserAsync, selectLoggedInUser } from './Auth/authSlice';
 import { useSelector, useDispatch } from 'react-redux';
 
 

@@ -23,13 +23,14 @@ const userSignup = async (req, res) => {
 
         if (user) {
             const jwtToken = generateToken(user._id);
-            await Profile.create({user: user._id});
+            await Profile.create({ user: user._id });
             // console.log(`jwt token ${jwtToken}`);
             res.cookie("fwi_&wei&bn", jwtToken, { expires: new Date(Date.now() + (2 * 60 * 60 * 1000)), httpOnly: true, });
 
             res.json({
                 id: user._id,
                 username: user.username,
+                image: user.image,
                 token: jwtToken,
             });
             // const userEmail = user.email;
@@ -72,10 +73,11 @@ const userLogin = async (req, res) => {
 
         if (user && user.comparePassword(password)) {
             const jwtToken = generateToken(user._id);
-            res.cookie("fwi_&wei&bn", jwtToken, { expires: new Date(Date.now() + (2 * 60 * 60 *1000)), httpOnly: true});
+            res.cookie("fwi_&wei&bn", jwtToken, { expires: new Date(Date.now() + (2 * 60 * 60 * 1000)), httpOnly: true });
             return res.json({
                 id: user._id,
                 username: user.username,
+                image: user.image,
                 token: jwtToken,
             })
         }
@@ -88,20 +90,25 @@ const userLogin = async (req, res) => {
 }
 
 const userAuth = async (req, res) => {
-    try{
-        if(req.cookies['fwi_&wei&bn']){
+    try {
+        if (req.cookies['fwi_&wei&bn']) {
             const user = await User.findOne(req.user);
+
+            const jwtToken = generateToken(user._id);
+            // console.log(jwtToken);
+            res.cookie("fwi_&wei&bn", jwtToken, { expires: new Date(Date.now() + (2 * 60 * 60 * 1000)), httpOnly: true, })
             res.json({
                 id: user._id,
                 username: user.username,
                 image: user.image,
+                // jwtToken: jwtToken,
             })
         }
-        else{
+        else {
             return res.sendStatus(500);
         }
     }
-    catch(error){
+    catch (error) {
         throw new Error(`user auth error: ${error}`);
     }
 }
@@ -144,21 +151,21 @@ const resetPassWordRequest = async (req, res) => {
         const email = req.body.email;
 
         const resetToken = crypto.randomBytes(48).toString("hex");
-        const user = await User.findOneAndUpdate({email: email}, {$set: {resetPasswordToken: resetToken}});
+        const user = await User.findOneAndUpdate({ email: email }, { $set: { resetPasswordToken: resetToken } });
 
-        if(user){
+        if (user) {
             const resetPage = `http://localhost:3000/reset-password?token=${resetToken}&email=${email}`;
             const subject = `Reset password for E-commerce throught gmail: ${email}`;
             const html = `<p> Click below link to reset password</p>
             <a href='${resetPage}'> Reset Password Link </a>`;
             const userEmail = email;
-    
+
             // const text="this a password reset link";
 
-            if(email){
-                const response = await sendMail({userEmail, subject, html});
+            if (email) {
+                const response = await sendMail({ userEmail, subject, html });
 
-                if(response){
+                if (response) {
                     res.json(response);
                 }
             }

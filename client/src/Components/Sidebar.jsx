@@ -1,23 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react'
-import "./sidebar.css"
-import Homeicon from "../../Icons/home.png";
-import SearchIcon from "../../Icons/Search.png"
-import Exploreicon from "../../Icons/Explore.png"
-import Reels from "../../Icons/Reels.png"
-import Messages from "../../Icons/Messenger.png"
-import Notifications from "../../Icons/Notifications.png"
-import createicon from "../../Icons/New post.png"
-import Instragramicon from "../../Icons/Instagram.png"
-import More from "../../Icons/Settings.png"
-import InstagramIcon from "../../Icons/Instagramlogo.png"
+import "./css/sidebar.css"
+import Homeicon from "../Icons/home.png";
+import SearchIcon from "../Icons/Search.png"
+import Exploreicon from "../Icons/Explore.png"
+import Reels from "../Icons/Reels.png"
+import Messages from "../Icons/Messenger.png"
+import Notifications from "../Icons/Notifications.png"
+import createicon from "../Icons/New post.png"
+import Instragramicon from "../Icons/Instagram.png"
+import More from "../Icons/Settings.png"
+import InstagramIcon from "../Icons/Instagramlogo.png"
 import { Link } from 'react-router-dom';
 import { Modal } from "@mui/material"
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { useDispatch, useSelector } from "react-redux";
-import { searchUserAsync, selectSearchUser } from "./sidebarSlice"
-import { selectLoggedInUser } from "../Auth/authSlice";
+import { searchUserAsync, selectSearchUser } from "./Sidebar/sidebarSlice"
+import { selectLoggedInUser } from "./Auth/authSlice";
 
-import CreatePostModal from '../modalComponent/CreatePostModal';
+import CreatePostModal from './modalComponent/CreatePostModal';
 
 export default function Sidebar() {
     const dispatch = useDispatch();

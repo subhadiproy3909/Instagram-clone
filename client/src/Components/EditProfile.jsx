@@ -10,6 +10,13 @@ const EditProfile = () => {
     const inputRef = useRef(null);
     const { state } = useLocation();
     const [open, setOpen] = useState(false);
+    const [count, setCount] = useState(0);
+    const [editProfile, setEditprofile] = useState({
+        website: null,
+        bio: "",
+        gender: "",
+        showAccount: false,
+    })
 
     const handleClose = () => {
         setOpen(false);
@@ -18,10 +25,31 @@ const EditProfile = () => {
     const handleOpenModal = () => {
         setOpen(true);
     }
-    console.log(state);
+    // console.log(state);
+
+    const handleEditProfile = (e) => {
+        if(e.target.name == "bio" && e.target.value <= 150){
+            console.log(e.target.value);
+            setEditprofile((prev) => ({
+                ...prev,
+                [e.target.name]: e.target.value,
+            }))
+            setCount((prev) => prev + 1);
+        }
+        else{
+            setEditprofile((prev) => ({
+                ...prev,
+                [e.target.name]: e.target.value,
+            }))
+        }
+    }
 
     const handleProfilePhoto = () => {
         inputRef.current.click();
+    }
+
+    const handleSubmit = () => {
+
     }
 
     return (
@@ -56,8 +84,8 @@ const EditProfile = () => {
                 <div style={{ gap: "2rem" }}>
                     <aside className="profile_section-rightside">Bio</aside>
                     <div className="profile_section-leftside">
-                        <textarea style={{ backgroundColor: "transparent" }} name="bio" id="bio" cols="20" rows="4"></textarea>
-                        <small>0/150</small>
+                        <textarea style={{ backgroundColor: "transparent", color: "white" }} name="bio" id="bio" cols="20" rows="4" onChange={handleEditProfile}></textarea>
+                        <small><span> {count} </span>/150</small>
                     </div>
                 </div>
 
@@ -84,7 +112,10 @@ const EditProfile = () => {
                         <input style={{ opacity: 0 }} type="text" className="profile_section-rightside" />
                     </aside>
                     <div>
-                        <input style={{ cursor: "pointer", padding: "10px 15px", fontSize: "14px", fontWeight: "600", backgroundColor: "blue", color: "white", borderRadius: "10px", border: "none" }} type="submit" value={"Submit"} />
+                        <input 
+                            style={{ cursor: "pointer", padding: "10px 15px", fontSize: "14px", fontWeight: "600", backgroundColor: "blue", 
+                            color: "white", borderRadius: "10px", border: "none" }} type="submit" value={"Submit"}
+                            onClick={handleSubmit}  />
                     </div>
                 </div>
             </div>

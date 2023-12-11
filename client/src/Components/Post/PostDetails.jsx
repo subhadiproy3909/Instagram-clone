@@ -59,7 +59,6 @@ const PostDetails = ({ item }) => {
     }, [postId, dispatch]);
 
     useEffect(() => {
-        console.log(Like.id);
         if (Like.id !== null) {
             dispatch(handleLikeAsync({ id: Like.id }));
         }
@@ -84,8 +83,8 @@ const PostDetails = ({ item }) => {
     const postDetails = useSelector(selectPostDetails);
     const profileDetails = useSelector(selectProfileDetails);
 
-    // console.log(postDetails);
-    // console.log(postDetails?.like?.includes(profileDetails.profile.user._id));
+    // console.log(postDetails.like);
+    // console.log(profileDetails.profile);
     return (
         <>
 
@@ -136,7 +135,7 @@ const PostDetails = ({ item }) => {
                                     <div style={{ display: 'flex', alignItems: "center", justifyContent: "space-between", gap: "10px" }}>
                                         <div onClick={handleLike}>
                                             {(postDetails?.like?.length > 0 &&
-                                                postDetails?.like?.includes(profileDetails.profile.user._id)
+                                                postDetails?.like?.some((value) => value._id === profileDetails.profile.user._id)
                                                 || Like.id === true)
                                                 ?
                                                 <img src={Unlike} className='logoforpost' alt="" />
@@ -153,8 +152,8 @@ const PostDetails = ({ item }) => {
                                     <div style={{ cursor: "pointer" }} onClick={handleSaved}>
 
                                         {(profileDetails.profile.savedPost.length > 0 &&
-                                            profileDetails.profile.savedPost.includes(item) ||
-                                            saved.status === true)
+                                            profileDetails.profile.savedPost.some((post) => item === post._id)) 
+                                            || saved.status === true
                                             ?
                                             <Bookmark />
                                             :

@@ -60,13 +60,16 @@ router.delete("/remove:id", auth, async (req, res) => {
     }
 });
 
-router.get("/fetch/:username", async (req, res) => {
+router.get("/fetch/:id", async (req, res) => {
     try {
-        const post = await Post.find({owner: req.params.username})
+        const post = await Post.find({owner: req.params.id})
             .populate("owner", "_id image username")
-            .populate("comment.user", "_id image username");
+            .populate("comment.user", "_id image username")
+            .populate("like", "_id image username")
+            .sort({createdAt: -1});
 
         if (post) {
+            // console.log(post);
             return res.json(post);
         }
         else {
@@ -74,7 +77,9 @@ router.get("/fetch/:username", async (req, res) => {
         }
     }
     catch (error) {
-        throw new Error(`fetch comment error: ${error}`);
+        // throw new Error(`fetch comment error: ${error}`);
+        console.warn(`fetch comment error: ${error}`);
+        return;
     }
 })
 router.get("/fetch/selected/post/:id", auth, async (req, res) => {
@@ -83,7 +88,8 @@ router.get("/fetch/selected/post/:id", auth, async (req, res) => {
 
         const post = await Post.findOne({ _id: postId })
             .populate("owner", "_id image username")
-            .populate("comment.user", "_id image username");
+            .populate("comment.user", "_id image username")
+            .populate("like", "_id image username");
 
         if (post) {
             return res.json(post);
@@ -160,8 +166,9 @@ router.patch("/like", auth, async (req, res) => {
         }
 
         if (post) {
-            const data = await Post.findById(postId).populate("like", "_id image username fullname");;
-            return res.json(data);
+            const data = await Post.findById(postId).populate("like", "_id image username fullname");
+            console.log(data.like);
+            return res.json(data.like);
         }
         else{
             return res.sendStatus(500);

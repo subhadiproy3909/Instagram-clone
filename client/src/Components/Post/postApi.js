@@ -2,28 +2,21 @@ import axios from "axios";
 
 export function createPost(postInfo) {
     return new Promise(async (resolve) => {
-
         const response = await axios.post(`api/post/create`, postInfo);
-        resolve(response);
+        resolve(response.data);
     });
 }
 
 
-export function fetchPosts(username){
+export function fetchPosts(userId){
     return new Promise( async (resolve) => {
-        const response = await fetch(`api/post/fetch/${username}`);
-
-        const data = await response.json();
+        const {data} = await axios.get(`api/post/fetch/${userId}`);
         resolve(data);
     })
 }
 
 export function fetchPostDetails(postId){
     return new Promise (async (resolve) => {
-        // const response = await fetch(`api/post/fetch/selected/post?${postId}`);
-        // const data = await response.json();
-
-        // console.log(postId);
         const config = {
             headers: {
                 "Content-type": "application/json",

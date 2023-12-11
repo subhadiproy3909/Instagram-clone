@@ -12,7 +12,7 @@ import PostDetails from '../Post/PostDetails'
 import "./explorepost.css";
 
 
-export default function Explorepost({item}) {
+export default function Explorepost({post}) {
   // console.log(item)
   const [open, setOpen] = useState(false);
   const [Like, SetLike] = useState(Likeicon);
@@ -35,15 +35,15 @@ export default function Explorepost({item}) {
   return (
     <div className="container">
       <div className="imagefor" onClick={handleShowmodal}>
-        <img src={item?.content} className='imageforimage' alt="" />
+        <img src={post?.content} className='imageforimage' alt="" />
         <div className="text">
           <div style={{ display: "flex", alignItems: 'center', marginLeft: "10px" }}>
             <img src={love} className='logoforexplorepost' alt="" />
-            <p style={{ marginLeft: 5 }}>{item?.item?.likes}</p>
+            <p style={{ marginLeft: 5 }}>{post?.like?.length}</p>
           </div>
           <div style={{ display: "flex", alignItems: 'center', marginLeft: "10px" }}>
             <img src={comment} className='logoforexplorepost' alt="" />
-            <p style={{ marginLeft: 5 }}>{item?.item?.comments}</p>
+            <p style={{ marginLeft: 5 }}>{post?.comment?.length}</p>
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@ export default function Explorepost({item}) {
           </div>
 
           <div className='post-content'>
-            <PostDetails item={item._id} />
+            <PostDetails item={post._id} />
           </div>
         </>
       </Modal>

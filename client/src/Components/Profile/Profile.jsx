@@ -16,6 +16,7 @@ import "./profile.css";
 import ProfileHeader from './component/ProfileHeader';
 import Explorepost from '../ExplorePost/Explorepost';
 import { selectProfileDetails, selectProfileStatus, fetchProfileAsync } from "./profileSlice";
+import { fetchPostsAsync, selectPosts } from "../Post/postSlice";
 import { selectLoggedInUser } from "../Auth/authSlice";
 import CreatePostModal from '../modalComponent/CreatePostModal';
 
@@ -37,6 +38,7 @@ export default function Profile({ userId }) {
         if (id !== undefined) {
             // console.log(`user profile id useEffect : ${id}`);
             dispatch(fetchProfileAsync(id));
+            dispatch(fetchPostsAsync(id));
         }
     }, [id, dispatch]);
 
@@ -59,13 +61,14 @@ export default function Profile({ userId }) {
     }
 
     const profile = useSelector(selectProfileDetails);
-    const profileStatus = useSelector(selectProfileStatus);
+    // const profileStatus = useSelector(selectProfileStatus);
+    const userPosts = useSelector(selectPosts);
     const user = useSelector(selectLoggedInUser);
 
+    // console.log(profile?.profile);
     return (
         <div>
             {
-                // profileStatus !== 'loading' && profile &&
                 <div className=''>
 
                     {profile?.profile.user.username === user?.username ?
@@ -98,13 +101,14 @@ export default function Profile({ userId }) {
                                 </div>
 
                                 {posts &&
+                                    // <div>posts</div>
                                     <>
-                                        {profile.posts.length !== 0 ?
+                                        {userPosts?.length !== 0 ?
                                             // {map through all posts posted by logged in user}
                                             <>
                                                 <div className='postContainerForProfile'>
-                                                    {profile?.posts.map((item) => (
-                                                        <Explorepost item={item} />
+                                                    {userPosts?.map((post) => (
+                                                        <Explorepost post={post} />
                                                     ))}
                                                 </div>
                                             </>
@@ -144,7 +148,26 @@ export default function Profile({ userId }) {
                                 }
 
                                 {saved &&
-                                    <div className='postContainerForProfile'>hello</div>
+                                    <>
+                                        {
+                                            profile?.profile?.savedPost.length !== 0 ?
+                                                <>
+                                                    <div className='postContainerForProfile'>
+                                                        {profile?.profile?.savedPost?.map((post) => (
+                                                            <Explorepost post={post} />
+                                                        ))}
+                                                    </div>
+                                                </>
+                                                :
+                                                <>
+                                                    <div style={{ margin: "10px 2.9rem" }}>
+                                                        <div className='no-post'>
+                                                            <h3>No Saved Post</h3>
+                                                        </div>
+                                                    </div>
+                                                </>
+                                        }
+                                    </>
                                 }
                             </>
                             :
@@ -191,12 +214,6 @@ export default function Profile({ userId }) {
                     }
 
                 </div>
-                // :
-                // <>
-                //     <div className='loading'>
-                //         <p>LOADING...</p>
-                //     </div>
-                // </>
             }
         </div>
     )

@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {fetchProfile, updateFollower, updateFollowing, updateSavedPost} from "./profileApi";
+import {fetchProfile, updateFollowing, updateSavedPost} from "./profileApi";
 
 const initialState = {
     profileDetails: null,
@@ -50,7 +50,6 @@ export const profileSlice = createSlice({
                 state.status = "loading";
             })
             .addCase(fetchProfileAsync.fulfilled, (state, action) => {
-                state.profileDetails = null;
                 state.status = "idle";
                 state.profileDetails = action.payload;
             })
@@ -59,27 +58,30 @@ export const profileSlice = createSlice({
             })
             .addCase(updateFollowerAsync.fulfilled, (state, action) => {
                 state.status = "idle";
-                state.profileDetails.follower = action.payload;
+                state.profileDetails.profile.follower = action.payload;
             })
             .addCase(updateFollowingAsync.pending, (state) => {         // update following.
                 state.status = "loading";
             })
             .addCase(updateFollowingAsync.fulfilled, (state, action) => {
                 state.status = "idle";
-                state.profileDetails.following = action.payload;
+                state.profileDetails.profile.follower = action.payload;
             })
             .addCase(updateSavedPostAsync.pending, (state) => {         // update saved post
                 state.status = "loading";
             })
             .addCase(updateSavedPostAsync.fulfilled, (state, action) => {
                 state.status = "idle";
-                state.profileDetails.savedPost = action.payload;
+                state.profileDetails.profile.savedPost = action.payload;
             })
     },
 });
 
 
-export const selectProfileDetails = (state) => state.profile.profileDetails;
+export const selectProfileDetails = (state) => {
+    // console.log(state.profile.profileDetails)
+    return state.profile.profileDetails;
+}
 export const selectProfileStatus = (state) => state.profile.status;
 
 export default profileSlice.reducer;

@@ -1,3 +1,9 @@
+:root{
+    /* background-color: #202020; */
+    --modal: #232323;
+    --skeleton: #151515;
+}
+
 .homesubcontainer{
     display: flex;
     color: white;

@@ -1,7 +1,7 @@
 import React from 'react'
 import "./explore.css"
 import Explorepost from '../../Components/ExplorePost/Explorepost'
-import Sidebar from '../../Components/Sidebar/Sidebar'
+import Sidebar from '../../Components/Sidebar'
 // import { PostExplore } from '../../Components/data'
 export default function Explore() {
   return (

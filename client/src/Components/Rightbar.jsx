@@ -1,6 +1,6 @@
 import React from 'react'
-import "./rightbar.css"
-import Post from '../Post/Post'
+import "./css/rightbar.css"
+import Post from './Post/Post'
 export default function Rightbar() {
   return (
     <div className='MainRigntBar'>

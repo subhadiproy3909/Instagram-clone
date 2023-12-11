@@ -96,6 +96,92 @@
     justify-content: center;
 }
 
+.modal-follow-container{
+    /* background-color: rgb(54, 53, 53); */
+    background-color: var(--modal);
+    color: white;
+    text-align: center;
+    border-radius: 10px;
+    width: 400px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.modal-follow-container-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0;
+    padding: .7rem;
+    border-bottom: 1px solid rgb(88, 87, 87);
+    font-size: 17px;
+}
+
+.modal-follow-container-header > p{
+    margin: 0 0;
+    font-weight: 600;
+}
+
+.modal-follow-container-body{
+    /* width: 100%; */
+    overflow: auto;
+}
+
+.modal-follow-container-body::-webkit-scrollbar{
+    visibility: hidden;
+}
+
+.search-bar-follow{
+    display: flex;
+    /* background-color: red; */
+    padding: .5rem 1rem;
+}
+.search-bar-follow > input{
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    margin: .5rem 1rem;
+    font-size: 1rem;
+    color: white;
+    /* padding: .2rem 1rem; */
+}
+
+.search-bar-follow > input:focus{
+    outline: none;
+}
+
+.list-of-user{
+    display: flex;
+    overflow: auto;
+    /* background-color: purple; */
+}
+
+.follow-user{
+    display: flex;
+    justify-content: space-between;
+    text-align: start;
+}
+
+.follow-user p{
+    margin: 0 0;
+}
+
+.Remove-btn{
+    background-color: rgb(80, 80, 80);
+    color: rgb(255, 255, 255);
+    /* font-weight: 600; */
+    border: none;
+    border-radius: 8px;
+    padding: .7rem 1.1rem;
+    cursor: pointer;
+}
+
+.Remove-btn:hover{
+    background-color: rgb(69, 69, 69);
+}
+
 /* .modal-container{
     background-color: rgb(54, 53, 53);
     color: white;

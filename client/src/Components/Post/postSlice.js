@@ -20,8 +20,8 @@ export const createPostAsync = createAsyncThunk(
 
 export const fetchPostsAsync = createAsyncThunk(
     "post/fetch/posts",
-    async (username) => {
-        const response = await fetchPosts(username);
+    async (userId) => {
+        const response = await fetchPosts(userId);
 
         return response;
     }

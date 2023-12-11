@@ -13,7 +13,7 @@ import Signup from "./Pages/Signup/Signup";
 import Explore from "./Pages/Explore/Explore";
 import Profile from "./Pages/Profile/Profilepage";
 import EditProfilePage from "./Pages/EditProfile/EditProfilePage";
-import Protected from "./Components/Auth/component/Protected"
+import Protected from "./Components/Protected";
 import { store } from "./assets/store";
 
 import { selectLoggedInUser, selectUserChecked, checkAuthAsync } from "./Components/Auth/authSlice";

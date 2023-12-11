@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
-import "./signup.css"
-import signupicon from '../../../Icons/icons8-facebook-67.png'
-import Instagramlogo from "../../../Icons/Instagram-Logo-2010-2013.png"
+import "./css/signup.css"
+import signupicon from '../Icons/icons8-facebook-67.png'
+import Instagramlogo from "../Icons/Instagram-Logo-2010-2013.png"
 import { Link, Navigate } from 'react-router-dom';
 
 
-import { selectLoggedInUser, createUserAsync } from '../authSlice';
+import { selectLoggedInUser, createUserAsync } from './Auth/authSlice';
 
 export default function SignupPage() {
   const dispatch = useDispatch();
