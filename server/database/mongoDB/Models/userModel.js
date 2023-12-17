@@ -39,7 +39,8 @@ const userSchema = new mongoose.Schema({
     bio: {
         type: String,
         min: 0,
-        max: 150
+        max: 150,
+        default: "",
     },
     gender: {
         type: String,

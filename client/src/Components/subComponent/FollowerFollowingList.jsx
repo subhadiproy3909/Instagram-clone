@@ -50,11 +50,11 @@ const Followers = ({ profile, state, handleModal }) => {
                                                 }}
                                             >
                                                 <div className='follow-user'>
-                                                    <Link to={`/${user._id}`} onClick={handleClose}>
+                                                    <Link to={`/${user.username}`} state={user._id} onClick={handleClose}>
                                                         <img src={user.image} style={{ width: "50px", objectFit: "cover", height: "45px", borderRadius: "50%", marginTop: "" }} alt='' />
                                                     </Link>
                                                     <div style={{ marginLeft: 10 }}>
-                                                        <Link to={`/${user._id}`} onClick={handleClose}>
+                                                        <Link to={`/${user._id}`} state={user._id} onClick={handleClose}>
                                                             <p style={{ fontSize: 14, color: "#A8A8A8" }}> {user.username} </p>
                                                         </Link>
                                                         <p style={{ color: "#A8A8A8" }}>{user.fullname}</p>

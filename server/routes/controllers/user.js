@@ -3,6 +3,7 @@ const crypto = require('crypto');
 const User = require('../../database/mongoDB/Models/userModel');
 const Profile = require('../../database/mongoDB/Models/profileModel');
 const generateToken = require('../services/generateToken');
+const uploadOnCloudinary = require("../services/fileUpload");
 const { sendMail } = require('../services/sendMail');
 
 
@@ -28,9 +29,15 @@ const userSignup = async (req, res) => {
             res.cookie("fwi_&wei&bn", jwtToken, { expires: new Date(Date.now() + (2 * 60 * 60 * 1000)), httpOnly: true, });
 
             res.json({
+                // id: user._id,
+                // username: user.username,
+                // image: user.image,
                 id: user._id,
                 username: user.username,
                 image: user.image,
+                bio: user.bio,
+                gender: user.gender,
+                showAccount: user.showAccount,
                 token: jwtToken,
             });
             // const userEmail = user.email;
@@ -75,9 +82,16 @@ const userLogin = async (req, res) => {
             const jwtToken = generateToken(user._id);
             res.cookie("fwi_&wei&bn", jwtToken, { expires: new Date(Date.now() + (2 * 60 * 60 * 1000)), httpOnly: true });
             return res.json({
+                // id: user._id,
+                // username: user.username,
+                // image: user.image,
                 id: user._id,
                 username: user.username,
+                fullname: user.fullname,
                 image: user.image,
+                bio: user.bio,
+                gender: user.gender,
+                showAccount: user.showAccount,
                 token: jwtToken,
             })
         }
@@ -96,11 +110,17 @@ const userAuth = async (req, res) => {
 
             const jwtToken = generateToken(user._id);
             // console.log(jwtToken);
-            res.cookie("fwi_&wei&bn", jwtToken, { expires: new Date(Date.now() + (2 * 60 * 60 * 1000)), httpOnly: true, })
+            res.cookie("fwi_&wei&bn", jwtToken, { expires: new Date(Date.now() + (2 * 60 * 60 * 1000)), httpOnly: true, });
+
+            // console.log(jwtToken);
             res.json({
                 id: user._id,
                 username: user.username,
+                fullname: user.fullname,
                 image: user.image,
+                bio: user.bio,
+                gender: user.gender,
+                showAccount: user.showAccount,
                 // jwtToken: jwtToken,
             })
         }
@@ -117,11 +137,28 @@ const userAuth = async (req, res) => {
 const updateAccount = async (req, res) => {
     try {
         const reqBody = req.body;
-
-        const account = await User.findByIdAndUpdate(req.user, reqBody, { new: true });
+        const data = JSON.parse(reqBody.body);
+        
+        let response;
+        if(req.file){
+            response = await uploadOnCloudinary(req.file.path);
+        }
+        const account = await User.findByIdAndUpdate(
+            req.user,
+            {image: response?.url, bio: data.bio, gender: data.gender, showAccount: data.showAccount}, 
+            { new: true }
+        );
 
         if (account) {
-            return res.json(account);
+            return res.json({
+                id: account._id,
+                username: account.username,
+                fullname: user.fullname,
+                image: account.image,
+                bio: account.bio,
+                gender: account.gender,
+                showAccount: account.showAccount,
+            });
         }
         else {
             return res.sendStatus(500);
@@ -149,12 +186,13 @@ const userLogout = async (req, res) => {
 const resetPassWordRequest = async (req, res) => {
     try {
         const email = req.body.email;
+        console.log(email)
 
         const resetToken = crypto.randomBytes(48).toString("hex");
         const user = await User.findOneAndUpdate({ email: email }, { $set: { resetPasswordToken: resetToken } });
 
         if (user) {
-            const resetPage = `http://localhost:3000/reset-password?token=${resetToken}&email=${email}`;
+            const resetPage = `http://localhost:5173/reset-password?token=${resetToken}&email=${email}`;
             const subject = `Reset password for E-commerce throught gmail: ${email}`;
             const html = `<p> Click below link to reset password</p>
             <a href='${resetPage}'> Reset Password Link </a>`;
@@ -166,7 +204,7 @@ const resetPassWordRequest = async (req, res) => {
                 const response = await sendMail({ userEmail, subject, html });
 
                 if (response) {
-                    res.json(response);
+                    return res.json('ok');
                 }
             }
         }
@@ -206,4 +244,4 @@ const resetPassword = async (req, res) => {
 
 
 
-module.exports = { userSignup, userLogin, userAuth, updateAccount, userLogout };
+module.exports = { userSignup, userLogin, userAuth, updateAccount, userLogout, resetPassWordRequest, resetPassword };

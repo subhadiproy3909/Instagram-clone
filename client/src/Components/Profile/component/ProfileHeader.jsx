@@ -46,7 +46,7 @@ const ProfileHeader = ({ own, profile, posts }) => {
                             <p style={{ marginLeft: "" }}> {profile?.user.username} </p>
                             {
                                 own ?
-                                    <Link to={"/edit/profile"} state={profile?.user} style={{ textDecoration: "none", backgroundColor: "white", color: "black", fontWeight: "600", fontSize: "15px", padding: "5px 15px", marginLeft: "20px", borderRadius: 10, border: "none", cursor: "pointer" }}>
+                                    <Link to={"/edit"} state={profile?.user} style={{ textDecoration: "none", backgroundColor: "white", color: "black", fontWeight: "600", fontSize: "15px", padding: "5px 15px", marginLeft: "20px", borderRadius: 10, border: "none", cursor: "pointer" }}>
                                         Edit profile
                                     </Link>
                                     :
@@ -69,11 +69,13 @@ const ProfileHeader = ({ own, profile, posts }) => {
                         }
 
                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                            <p style={{ marginLeft: "", marginTop: -10, fontWeight: 600 }}>User description</p>
+                            <p style={{ marginLeft: "", marginTop: -10, fontWeight: 400 }}>{profile.user.username}</p>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center' }}>
+                            <p style={{ marginLeft: "", marginTop: -10, fontWeight: 400, fontSize: "14px" }}>{profile.user.bio}</p>
                         </div>
                     </div>
                 </div>
-                // <></>
             }
         </>
     )

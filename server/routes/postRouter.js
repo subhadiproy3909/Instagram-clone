@@ -8,6 +8,8 @@ const Profile = require('../database/mongoDB/Models/profileModel');
 const auth = require("../middlewares/authMiddleware");
 const uploadOnCloudinary = require("./services/fileUpload");
 
+const { fetchFollowingUsersPosts } = require("./controllers/post");
+
 // content.
 
 const upload = multer({
@@ -21,14 +23,14 @@ const upload = multer({
     })
 })
 
-router.post("/create", auth, upload.single("file"),async (req, res) => {
+router.post("/create", auth, upload.single("file"), async (req, res) => {
     try {
 
         const owner = req.user;
         const caption = req.body.caption;
         const response = await uploadOnCloudinary(req.file.path);
 
-        const post = await Post.create({owner: owner, content: response.url, comment: {user: owner, message: caption}});
+        const post = await Post.create({ owner: owner, content: response.url, comment: { user: owner, message: caption } });
 
         if (post) {
             return res.json(post);
@@ -46,7 +48,7 @@ router.delete("/remove:id", auth, async (req, res) => {
     try {
         const { id } = req.query;
 
-        const post = await Post.findOneAndDelete({_id: id, owner: req.user});
+        const post = await Post.findOneAndDelete({ _id: id, owner: req.user });
 
         if (post) {
             return res.sendStatus(200);
@@ -62,11 +64,11 @@ router.delete("/remove:id", auth, async (req, res) => {
 
 router.get("/fetch/:id", async (req, res) => {
     try {
-        const post = await Post.find({owner: req.params.id})
+        const post = await Post.find({ owner: req.params.id })
             .populate("owner", "_id image username")
             .populate("comment.user", "_id image username")
             .populate("like", "_id image username")
-            .sort({createdAt: -1});
+            .sort({ createdAt: -1 });
 
         if (post) {
             // console.log(post);
@@ -119,7 +121,7 @@ router.patch("/comment/add", auth, async (req, res) => {
         );
         if (post) {
             const fetchPost = await Post.findById(postId)
-                            .populate("owner", "_id image username").populate("comment.user", "_id image username");
+                .populate("owner", "_id image username").populate("comment.user", "_id image username");
             return res.json(fetchPost.comment);
         }
         else {
@@ -131,20 +133,20 @@ router.patch("/comment/add", auth, async (req, res) => {
 });
 
 router.get("/comment/fetch/:id", auth, async (req, res) => {
-    try{
+    try {
         const postId = req.params.id;
         console.log(postId);
 
         const post = await Post.findById(postId).select("comment").populate("comment.user", "_id image username fullname");
 
-        if(post){
+        if (post) {
             return res.json(post);
         }
-        else{
+        else {
             return res.sendStatus(500);
         }
     }
-    catch(error){
+    catch (error) {
         throw new Error(`fetch comment error: ${error}`);
     }
 })
@@ -155,22 +157,22 @@ router.patch("/like", auth, async (req, res) => {
     try {
         const postId = req.body.id;
 
-        const post = await Post.findOne({_id: postId});
+        const post = await Post.findOne({ _id: postId });
         console.log(post.like.includes(req.user._id));
 
-        if(!post.like.includes(req.user._id)){
+        if (!post.like.includes(req.user._id)) {
             await post.updateOne({ $push: { like: req.user._id } });
         }
-        else{
-            await post.updateOne( { $pull: { like: req.user._id } } );
+        else {
+            await post.updateOne({ $pull: { like: req.user._id } });
         }
 
         if (post) {
             const data = await Post.findById(postId).populate("like", "_id image username fullname");
-            console.log(data.like);
+            // console.log(data.like);
             return res.json(data.like);
         }
-        else{
+        else {
             return res.sendStatus(500);
         }
     }
@@ -178,6 +180,8 @@ router.patch("/like", auth, async (req, res) => {
         throw new Error(`add like error: ${error}`);
     }
 });
+
+router.get("/following/user/posts/:id", fetchFollowingUsersPosts);
 
 
 // add saved post feature.

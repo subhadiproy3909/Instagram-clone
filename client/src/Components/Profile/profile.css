@@ -8,10 +8,10 @@
 } */
 
 .subProfilerightbar{
-    margin-left: 2.9rem;
+    margin-left: clamp(11rem, 55vw, 10rem);
     padding-top: 30px;
     display: flex;
-    justify-content: center;
+    /* justify-content: center; */
     align-items: center;
 }
 
@@ -47,12 +47,12 @@
 }
 
 .postContainerForProfile{
-    margin: 10px 2.9rem;
+    margin: 10px 3.5rem;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, minmax(230px, 1fr));
     /* grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); */
     gap: 5px;
-    margin-top: 4rem;
+    margin-top: 2rem;
 }
 
 .no-post{

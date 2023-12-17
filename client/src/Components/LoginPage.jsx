@@ -53,13 +53,16 @@ export default function LoginPage() {
               <p style={{ fontWeight: 600, color: "#385185" }}>Log in with Facebook</p>
             </div>
             <div>
-              <p style={{ color: "#00376B", fontSize: 12, cursor: "pointer", marginLeft: 125, marginTop: -10 }}>Forgot Password?</p>
+              <Link to={`/accounts/password/reset`}
+              style={{color: "#00376B", fontSize: 12, cursor: "pointer", marginLeft: 125, marginTop: -10, textDecoration: "none"}}>
+                  Forgot Password?
+              </Link>
             </div>
           </div>
 
           <div className='bottomRight'>
             <div className='right2thpart'>
-              <p style={{ color: "black", }}>Have an account?</p>
+              <p style={{ color: "black", }}>Don't have an account?</p>
               <Link style={{ textDecoration: "none" }} to={'/signup'}>
                 <p style={{ color: "#00376B", fontWeight: 600, marginLeft: 0 }}>Sign up</p>
               </Link>
@@ -73,11 +76,11 @@ export default function LoginPage() {
               </div>
             </div>
           </div>
-        {/* </div> */}
+          {/* </div> */}
 
-      </div>
+        </div>
 
-    </div >
+      </div >
     </>
   )
 }

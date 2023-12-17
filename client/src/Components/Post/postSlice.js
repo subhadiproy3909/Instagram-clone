@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
-import { createPost, fetchPosts, fetchPostDetails, addComment, fetchComment, handleLike } from "./postApi";
+import { createPost, fetchPosts, fetchPostDetails, addComment, fetchComment, handleLike, fetchFollowingUserPosts } from "./postApi";
 
 const initialState = {
+    followingUserPosts: [],
     posts: [],
     postDetails: {},
     status: "idle",
@@ -62,6 +63,14 @@ export const handleLikeAsync = createAsyncThunk(
     }
 );
 
+export const fetchFollowingUserPostsAsync = createAsyncThunk(
+    "post/following/posts",
+    async (userId) => {
+        const response = await fetchFollowingUserPosts(userId);
+        return response;
+    }
+)
+
 
 export const postSlice = createSlice({
     name: "post",
@@ -118,11 +127,20 @@ export const postSlice = createSlice({
                 state.status = "idle";
                 state.postDetails.like = action.payload;
             })
+
+            .addCase(fetchFollowingUserPostsAsync.pending, (state) => {
+                state.status = "loading";
+            })
+            .addCase(fetchFollowingUserPostsAsync.fulfilled, (state, action) => {
+                state.status = "idle",
+                state.followingUserPosts = action.payload;
+            })
     },
 });
 
 export const selectPosts = (state) => state.post.posts;
 export const selectPostDetails = (state) => state.post.postDetails;
+export const selectFollowingUserPosts = (state) => state.post.followingUserPosts;
 export const selectPostStatus = (state) => state.post.status;
 // console.log(selectPostDetails);
 

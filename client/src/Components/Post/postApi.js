@@ -59,3 +59,16 @@ export function handleLike(postId){
         resolve(data);
     });
 }
+
+export function fetchFollowingUserPosts(userId) {
+    return new Promise (async (resolve, reject) => {
+        try{
+            const {data} = await axios.get(`api/post/following/user/posts/${userId}`);
+    
+            resolve(data);
+        }
+        catch(error){
+            reject(error);
+        }
+    })
+}

@@ -1,6 +1,7 @@
 const Profile = require('../../database/mongoDB/Models/profileModel');
 const Post = require("../../database/mongoDB/Models/postModel");
 
+
 const addRemoveFollowers = async (req, res) => {
     try {
         const user = await Profile.findById(req.user);
@@ -44,9 +45,9 @@ const updateFollowing = async (req, res) => {
             }
         }
 
-        if(user && otherProfile){
-            const data = await Profile.findOne({user: req.body.id})
-                        .populate("follower", "_id image fullname username");
+        if (user && otherProfile) {
+            const data = await Profile.findOne({ user: req.body.id })
+                .populate("follower", "_id image fullname username");
             return res.json(data.follower);
         }
     }
@@ -72,7 +73,7 @@ const savePostInProfile = async (req, res) => {
 
         if (userProfile) {
             const data = await Profile.findOne({ user: user })
-                        .populate("savedPost");
+                .populate("savedPost");
             res.json(data.savedPost);
         }
     }
@@ -87,19 +88,15 @@ const fetchProfile = async (req, res) => {
         // console.log(req.params);
 
         const profile = await Profile.findOne({ user: id })
-            .populate("user", "_id image fullname username showAccount")
-            .populate("follower", "_id image fullname username")
-            .populate("following", "_id image fullname username")
-            .populate("savedPost");
+            .populate("user", "_id image fullname username bio gender showAccount")
+            .populate("follower", "_id image fullname bio username")
+            .populate("following", "_id image fullname bio username")
+            .populate("savedPost")
 
-        const posts = await Post.find({ owner: id })
-            .populate("owner", "_id image username")
-            .populate("comment.user", "_id image username");
 
-        if (profile && posts) {
+        if (profile) {
             return res.json({
                 profile: profile,
-                posts: posts,
             });
         }
         else {
@@ -112,5 +109,28 @@ const fetchProfile = async (req, res) => {
     }
 }
 
+const followSuggestion = async (req, res) => {
+    try {
+        const user = req.user._id;
 
-module.exports = { addRemoveFollowers, updateFollowing, savePostInProfile, fetchProfile };
+        const suggestion = await Profile.find(
+            { 
+                $and: [{ "user": { $ne: user } }, { "follower": { $ne: user } }] //{ "follower": { $ne: user } 
+            }
+        )
+        .limit(5)
+        .populate("user", "_id image fullname bio username")
+        .populate("follower", "_id image fullname bio username")
+        .populate("following", "_id image fullname bio username");
+
+        if (suggestion) {
+            res.json(suggestion);
+        }
+    } 
+    catch (error) {
+        console.warn(`follow suggestion error: ${error}`);
+    }
+}
+
+
+module.exports = { addRemoveFollowers, updateFollowing, savePostInProfile, fetchProfile, followSuggestion };

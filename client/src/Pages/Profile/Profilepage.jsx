@@ -6,8 +6,7 @@ import { useLocation } from 'react-router-dom';
 const ProfilePage = () => {
   const location = useLocation();
 
-  const userId = location.pathname.slice(1);
-  // console.log(`user profile id : ${userId}`);
+  const userId = location.state;
   return (
     <>
       <div>

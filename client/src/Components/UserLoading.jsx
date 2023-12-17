@@ -53,13 +53,6 @@ const UserLoading = () => {
                     <Proxy  animation={false} width={"80px"} variant="text" sx={{ fontSize: '1rem' }} />
                 </Box>
             </Flex>
-            <Flex>
-                <Proxy animation={false} variant="circular" width={"45px"} height={"45px"} />
-                <Box display={"flex"} flexDirection={"column"} gap={".1rem"}>
-                    <Proxy animation={false} width={"120px"} variant="text" sx={{ fontSize: '1rem' }} />
-                    <Proxy  animation={false} width={"80px"} variant="text" sx={{ fontSize: '1rem' }} />
-                </Box>
-            </Flex>
         </Wrapper>
     )
 }

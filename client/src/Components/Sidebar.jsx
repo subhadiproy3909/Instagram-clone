@@ -1,4 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
+
+import LogoutIcon from '@mui/icons-material/Logout';
+
 import "./css/sidebar.css"
 import Homeicon from "../Icons/home.png";
 import SearchIcon from "../Icons/Search.png"
@@ -15,7 +18,7 @@ import { Modal } from "@mui/material"
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import { useDispatch, useSelector } from "react-redux";
 import { searchUserAsync, selectSearchUser } from "./Sidebar/sidebarSlice"
-import { selectLoggedInUser } from "./Auth/authSlice";
+import { selectLoggedInUser, logOutAsync } from "./Auth/authSlice";
 
 import CreatePostModal from './modalComponent/CreatePostModal';
 
@@ -28,7 +31,7 @@ export default function Sidebar() {
     const inputRef = useRef(null);
     const [modalIsOpen, setmodalIsOpen] = useState(false);
     const [ShowSearch, setShowSearch] = useState(true);
-    const [search, setSearch] = useState("");
+    const [search, setSearch] = useState(null);
 
 
     const handleShowmodal = () => {
@@ -54,8 +57,14 @@ export default function Sidebar() {
         setSearch(searchValue);
     }
 
+    const handleLogout = () => {
+        dispatch(logOutAsync());
+    }
+
     useEffect(() => {
-        dispatch(searchUserAsync(search));
+        if (search !== null) {
+            dispatch(searchUserAsync(search));
+        }
     }, [search, dispatch]);
 
 
@@ -168,8 +177,8 @@ export default function Sidebar() {
                             </li>
                         </div>}
                     </div>
-                    
-                    <Link className='routerdom-link' to={`/${loggedUser.id}`}>
+
+                    <Link className='routerdom-link' to={`/${loggedUser.username}`} state={loggedUser.id} >
                         <div className='sidebar-icons'>
                             <img src={loggedUser.image} alt='' className='profileicon' />
                             {ShowSearch && <div style={{ marginLeft: "20px" }}>
@@ -181,11 +190,15 @@ export default function Sidebar() {
                     </Link>
 
                     <div className='moreicon'>
-                        <div style={{ display: "flex", alignItems: "center", marginLeft: "20px" }}>
-                            <img src={More} alt='' className='profileicon' />
-                            {ShowSearch && <div style={{ marginLeft: "20px" }}>
+                        <div
+                            style={{ display: "flex", alignItems: "center", marginLeft: "20px" }}
+                            onClick={handleLogout}
+                        >
+                            {/* <img src={More} alt='' className='profileicon' /> */}
+                            <LogoutIcon />
+                            {ShowSearch && <div style={{ marginLeft: "10px" }}>
                                 <li className='listtext'>
-                                    More
+                                    Logout
                                 </li>
                             </div>}
                         </div>
@@ -205,7 +218,7 @@ export default function Sidebar() {
                     <div className='search-result-list'>
 
                         {searchResult.length !== 0 ? searchResult.map((item) => (
-                            <Link className='routerdom-link' key={item._id} to={`/${item._id}`}>
+                            <Link className='routerdom-link' key={item._id} to={`/${item.username}`} state={item._id}>
                                 <div className='searched_user-list'>
                                     <img src={item.image} style={{ width: "50px", objectFit: "cover", height: "45px", borderRadius: "50%", marginTop: "" }} alt='' />
                                     <div style={{ marginLeft: 10 }}>

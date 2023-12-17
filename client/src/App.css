@@ -1,7 +1,10 @@
 :root{
-    /* background-color: #202020; */
+    /* background-color: #008cff; */
     --modal: #232323;
     --skeleton: #151515;
+    --buttons: #194ecb;
+    --button-disabled: #629edb;
+    --submit-button: #008cff
 }
 
 .homesubcontainer{
@@ -9,6 +12,7 @@
     color: white;
     width: 100%;
     background-color: red;
+    /* overflow: scroll; */
 }
 
 .routerdom-link{
@@ -25,7 +29,6 @@
     min-height: 100dvh;
     width: 80%;
     background-color: black;
-    overflow: hidden;
 }
 
 .loading{

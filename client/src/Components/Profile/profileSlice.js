@@ -1,8 +1,9 @@
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {fetchProfile, updateFollowing, updateSavedPost} from "./profileApi";
+import {fetchProfile, updateFollowing, updateSavedPost, followSuggestion} from "./profileApi";
 
 const initialState = {
     profileDetails: null,
+    suggestion: [],
     status: "idle",
     error: null,
 }
@@ -39,6 +40,15 @@ export const updateSavedPostAsync = createAsyncThunk(
     }
 );
 
+export const followSuggestionAsync = createAsyncThunk(
+    "profile/suggestion", 
+    async () => {
+        const response = await followSuggestion();
+        return response;
+    }
+)
+
+
 export const profileSlice = createSlice({
     name: "profile",
     initialState,
@@ -74,14 +84,22 @@ export const profileSlice = createSlice({
                 state.status = "idle";
                 state.profileDetails.profile.savedPost = action.payload;
             })
+
+            .addCase(followSuggestionAsync.pending, (state) => {
+                state.status = "loading";
+            })
+            .addCase(followSuggestionAsync.fulfilled, (state, action) => {
+                state.status = "idle";
+                state.suggestion = action.payload;
+            })
     },
 });
 
 
 export const selectProfileDetails = (state) => {
-    // console.log(state.profile.profileDetails)
     return state.profile.profileDetails;
 }
 export const selectProfileStatus = (state) => state.profile.status;
+export const selectFollowSuggestion = (state) => state.profile.suggestion;
 
 export default profileSlice.reducer;

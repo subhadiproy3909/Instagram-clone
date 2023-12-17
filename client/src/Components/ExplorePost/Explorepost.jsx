@@ -12,7 +12,7 @@ import PostDetails from '../Post/PostDetails'
 import "./explorepost.css";
 
 
-export default function Explorepost({post}) {
+export default function Explorepost({own, post}) {
   // console.log(item)
   const [open, setOpen] = useState(false);
   const [Like, SetLike] = useState(Likeicon);
@@ -61,7 +61,7 @@ export default function Explorepost({post}) {
           </div>
 
           <div className='post-content'>
-            <PostDetails item={post._id} />
+            <PostDetails own={own} item={post._id} />
           </div>
         </>
       </Modal>

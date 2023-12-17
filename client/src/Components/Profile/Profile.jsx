@@ -6,13 +6,9 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import GridOnSharpIcon from '@mui/icons-material/GridOnSharp';
 import BookmarkBorderOutlinedIcon from '@mui/icons-material/BookmarkBorderOutlined';
 import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
-import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
-import BookmarkIcon from '@mui/icons-material/Bookmark';
-// import WestRoundedIcon from '@mui/icons-material/WestRounded';
 
 
 import "./profile.css";
-// import Iconsfromcreatemodal from "../../Icons/Icon to represent media such as images or videos.png";
 import ProfileHeader from './component/ProfileHeader';
 import Explorepost from '../ExplorePost/Explorepost';
 import { selectProfileDetails, selectProfileStatus, fetchProfileAsync } from "./profileSlice";
@@ -27,16 +23,14 @@ export default function Profile({ userId }) {
 
     const [posts, setPosts] = useState(true);
     const [saved, setSaved] = useState(false);
-    const [tagged, setTagged] = useState(false);
     const [open, setOpen] = useState(false);
-    const [id, setId] = useState("");
+    const [id, setId] = useState(null);
 
     if (userId !== id) {
         setId(userId);
     }
     useEffect(() => {
-        if (id !== undefined) {
-            // console.log(`user profile id useEffect : ${id}`);
+        if (id !== null) {
             dispatch(fetchProfileAsync(id));
             dispatch(fetchPostsAsync(id));
         }
@@ -61,20 +55,18 @@ export default function Profile({ userId }) {
     }
 
     const profile = useSelector(selectProfileDetails);
-    // const profileStatus = useSelector(selectProfileStatus);
     const userPosts = useSelector(selectPosts);
     const user = useSelector(selectLoggedInUser);
 
-    // console.log(profile?.profile);
     return (
         <div>
             {
                 <div className=''>
 
                     {profile?.profile.user.username === user?.username ?
-                        <ProfileHeader own={true} profile={profile?.profile} posts={profile?.posts.length} />
+                        <ProfileHeader own={true} profile={profile?.profile} posts={userPosts?.length} />
                         :
-                        <ProfileHeader own={false} profile={profile?.profile} posts={profile?.posts.length} />
+                        <ProfileHeader own={false} profile={profile?.profile} posts={userPosts?.length} />
                     }
 
 
@@ -108,7 +100,7 @@ export default function Profile({ userId }) {
                                             <>
                                                 <div className='postContainerForProfile'>
                                                     {userPosts?.map((post) => (
-                                                        <Explorepost post={post} />
+                                                        <Explorepost own={true} post={post} />
                                                     ))}
                                                 </div>
                                             </>
@@ -191,12 +183,12 @@ export default function Profile({ userId }) {
                                 </div>
 
 
-                                {profile?.posts.length !== 0 ?
+                                {userPosts?.length !== 0 ?
                                     // {map through all posts posted by logged in user}
                                     <>
                                         <div className='postContainerForProfile'>
-                                            {profile?.posts.map((item) => (
-                                                <Explorepost item={item} />
+                                            {userPosts.map((item) => (
+                                                <Explorepost own={false} post={item} />
                                             ))}
                                         </div>
                                     </>

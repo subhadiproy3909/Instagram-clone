@@ -13,77 +13,13 @@ import Signup from "./Pages/Signup/Signup";
 import Explore from "./Pages/Explore/Explore";
 import Profile from "./Pages/Profile/Profilepage";
 import EditProfilePage from "./Pages/EditProfile/EditProfilePage";
+import ForgetPasswordPage from "./Pages/ForgotPasswordPage";
 import Protected from "./Components/Protected";
 import { store } from "./assets/store";
 
 import { selectLoggedInUser, selectUserChecked, checkAuthAsync } from "./Components/Auth/authSlice";
-import { fetchProfileAsync } from "./Components/Profile/profileSlice";
-
-const router = createBrowserRouter([
-  {
-    path: "/",
-    element:
-      <Protected>
-        <Home />
-      </Protected>,
-
-  },
-  {
-    path: "/login",
-    element: <Login />,
-
-  },
-  {
-    path: "/signup",
-    element: <Signup />,
-
-  },
-  {
-    path: "/Explore",
-    element:
-      <Protected>
-        <Explore />
-      </Protected>,
-
-  },
-  {
-    path: `/username`,
-    element:
-      <Protected>
-        <Profile />
-      </Protected>,
-  },
-]);
-
-// const router = createBrowserRouter([
-//   {
-//     path: "/",
-//     element:
-//       <Home />,
-
-//   },
-//   {
-//     path: "/login",
-//     element: <Login />,
-
-//   },
-//   {
-//     path: "/signup",
-//     element: <Signup />,
-
-//   },
-//   {
-//     path: "/Explore",
-//     element:
-//       <Explore />,
-
-//   },
-//   {
-//     path: "/username",
-//     element:
-//       <Profile />,
-//   },
-// ]);
+import { fetchFollowingUserPostsAsync } from "./Components/Post/postSlice";
+import { fetchProfileAsync, followSuggestionAsync } from "./Components/Profile/profileSlice";
 
 function App() {
 
@@ -95,17 +31,17 @@ function App() {
     dispatch(checkAuthAsync());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   if(user){
-  //     // console.log(user);
-  //     dispatch(fetchProfileAsync(user.id));
-  //   }
-  // }, [user, dispatch]);
+  useEffect(() => {
+    if (user) {
+      console.log(user);
+      dispatch(followSuggestionAsync());
+    }
+  }, [user, dispatch]);
+
 
   return (
     <>
       {userChecked && (
-        // <RouterProvider router={router} />
         <Routes>
 
           <Route path="/" element={<Protected><Home /></Protected>} />
@@ -113,8 +49,9 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/Explore" element={<Protected><Explore /></Protected>} />
           <Route path="/:id" element={<Protected><Profile /></Protected>} />
-          <Route path="/edit/profile" element={ <Protected> <EditProfilePage /> </Protected> } />
-          
+          <Route path="/edit" element={<Protected> <EditProfilePage /> </Protected>} />
+          <Route path="/accounts/password/reset" element={ <ForgetPasswordPage /> } />
+
         </Routes>
       )}
     </>

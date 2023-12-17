@@ -65,3 +65,13 @@ export function updateSavedPost(postId) {
         resolve(data);
     })
 }
+
+export function followSuggestion() {
+    return new Promise (async (resolve) => {
+        const config = {
+            "Content-type": "application/json",
+        }
+        const {data} = await axios.get(`api/profile/follow/suggestion`, config);
+        resolve(data);
+    })
+}
